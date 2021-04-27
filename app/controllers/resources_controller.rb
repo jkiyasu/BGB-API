@@ -28,7 +28,16 @@ class ResourcesController < ApplicationController
   end
 
 
+  def topic
+    @top = params[:sort_topic] || session[:sort_topic]
+    if params[:sort_topic] != session[:sort_topic]
+      session[:sort_topic] = @top
+    end
 
+    @connectors = Connector.where("topic == ?", @top)
+    @resources = @connectors.resources
+    render json: @resources
+  end
 
 
   # GET /resources/1

@@ -4,9 +4,32 @@ class ResourcesController < ApplicationController
   # GET /resources
   def index
     @resources = Resource.all
+    if params[:sort_dist].present? || session[:sort_dist].present?
+      redirect_to distance_resource_path
+    end
+
+    if params[:sort_topic].present? || session[:sort_topic].present?
+      redirect_to topic_resource_path
+    end
 
     render json: @resources
+
   end
+
+
+  def distance
+    @dist = params[:sort_dist] || session[:sort_dist]
+    if params[:sort_dist] != session[:sort_dist]
+      session[:sort_dist] = @dist
+    end
+
+    @resources = Resource.where("distance <= ?", @dist).order(:distance)
+    render json: @resources
+  end
+
+
+
+
 
   # GET /resources/1
   def show

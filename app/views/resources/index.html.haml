@@ -1,0 +1,13 @@
+%table#resources
+  %thead
+    %tr
+      -# :sort => 'distance'
+      %th= link_to 'Distance', resources_path(:sort_dist => 'distance')
+      %th Topic
+      %th= link_to 'Topic', movies_path(:sort_topic => 'topic')
+  %tbody
+    - @resources.each do |resource|
+      %tr
+        %td= resource.name
+        %td= resource.distance
+        %td= resource.topics

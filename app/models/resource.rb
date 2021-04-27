@@ -18,4 +18,5 @@ class Resource < ApplicationRecord
   has_many :topics, through: :connectors
   validates :resource, :presence => true
   validates :region, :presence => true
+
 end
